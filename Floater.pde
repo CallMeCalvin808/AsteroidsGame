@@ -26,6 +26,10 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //change coordinates of direction of travel    
     myDirectionX += ((dAmount) * Math.cos(dRadians));    
     myDirectionY += ((dAmount) * Math.sin(dRadians));       
+    
+    //added code for me lol
+    if (myDirectionX > 10) {myDirectionX = 10;}
+    if (myDirectionY > 10) {myDirectionY = 10;}
   }   
   public void turn (int nDegreesOfRotation)   
   {     
