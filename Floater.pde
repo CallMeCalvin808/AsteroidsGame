@@ -30,6 +30,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //added code for me lol
     if (myDirectionX > 10) {myDirectionX = 10;}
     if (myDirectionY > 10) {myDirectionY = 10;}
+    if (myDirectionX < -10) {myDirectionX = -10;}
+    if (myDirectionY < -10) {myDirectionY = -10;}
   }   
   public void turn (int nDegreesOfRotation)   
   {     
@@ -64,7 +66,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   public void show ()  //Draws the floater at the current position  
   {             
     fill(myColor);   
-    stroke(myColor);    
+    stroke(myColor);
     
     //translate the (x,y) center of the ship to the correct position
     translate((float)myCenterX, (float)myCenterY);
