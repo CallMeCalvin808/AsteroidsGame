@@ -1,5 +1,9 @@
 class Spaceship extends Floater  
 {   
+  //tracks whether or not player is accelerating
+  private boolean isAccelerating;
+  
+    //constructor for player class
     public Spaceship() {
       corners = 10;
       xCorners = new int[corners];
@@ -31,11 +35,63 @@ class Spaceship extends Floater
       
       myColor = #0000FF;
       
+      //initializes player at start of the game
       myCenterX = myCenterY = 250;
       myDirectionX = myDirectionY = 0;
       myPointDirection = 360;
+      
+      isAccelerating = false;
     }
     
+    public void setIsAccelerating (boolean bool) {isAccelerating = bool;}
+    
+    public void show ()  //Draws the floater at the current position  
+  {             
+    fill(myColor);   
+    stroke(myColor);
+    
+    //translate the (x,y) center of the ship to the correct position
+    translate((float)myCenterX, (float)myCenterY);
+
+    //convert degrees to radians for rotate()     
+    float dRadians = (float)(myPointDirection*(Math.PI/180));
+    
+    //rotate so that the polygon will be drawn in the correct direction
+    rotate(dRadians);
+    
+    //draw the polygon
+    beginShape();
+    for (int nI = 0; nI < corners; nI++)
+    {
+      vertex(xCorners[nI], yCorners[nI]);
+    }
+    endShape(CLOSE);
+    
+    showEngine();
+    
+    //"unrotate" and "untranslate" in reverse order
+    rotate(-1*dRadians);
+    translate(-1*(float)myCenterX, -1*(float)myCenterY);
+  }   
+  
+  //function to make moving animation
+    public void showEngine(){
+      if (isAccelerating) {
+        fill(255, 0, 0);
+        stroke(255, 0, 0);
+        
+        beginShape();
+        vertex(-5, 0);
+        vertex(-10, 6);
+        vertex(-18, 4);
+        vertex(-14, 2);
+        vertex(-20, 0);
+        vertex(-14, -2);
+        vertex(-18, -4);
+        vertex(-10, -6);
+        endShape();
+      }
+    }
     
     public void setX(int x){myCenterX = x;}
     public int getX() {return (int)myCenterX;}

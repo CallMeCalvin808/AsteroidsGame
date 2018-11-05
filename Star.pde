@@ -1,8 +1,11 @@
 class Star //note that this class does NOT extend Floater
 {
+  //ints for position
   int myX, myY;
+  //ints for color
   int myR, myG, myB;
   
+  //constructor that randomizes position and color
   public Star(int size) {
     myX = (int)(Math.random() * size);
     myY = (int)(Math.random() * size);
