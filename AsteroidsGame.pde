@@ -3,9 +3,14 @@ Spaceship player;
 double ACCELERATE_CONSTANT = 0.1;
 int TURN_CONSTANT = 5;
 
+Asteroids[] asteroids;
+int NUM_ASTEROIDS = 11;
+int MIN_ASTEROID_SIZE = 3;
+int MAX_ASTEROID_SIZE = 10;
+
 //constants and declaration relating to star class
 Star[] stars;
-int numStar = 1000;
+int NUM_STARS = 500;
 
 //booleans managing controls
 boolean wIsPressed = false;
@@ -13,18 +18,20 @@ boolean aIsPressed = false;
 boolean dIsPressed = false;
 
 //int of size
-int canvasSize = 500;
+int canvasSize = 700;
 
 public void setup() {
   //sets up BG
-  size(500, 500);
+  size(700, 700);
   background(0);
   
   //initializes all classes
   player = new Spaceship();
-  stars = new Star[numStar];
+  stars = new Star[NUM_STARS];
+  asteroids = new Asteroids[NUM_ASTEROIDS];
   
   newStars();
+  newAsteroids();
 }
 
 public void draw() {
@@ -39,6 +46,11 @@ public void draw() {
   
   //shows last half of stars in the forground
   for (int i = stars.length / 2; i < stars.length; i++){stars[i].show();}
+  
+  for (int i = 0; i < asteroids.length; i++){
+    asteroids[i].show();
+    asteroids[i].move();
+  }
   
   //moves player
   controller();
@@ -86,6 +98,10 @@ public void hyperspace() {
   player.setDirectionY(0);
   player.setPointDirection((int)(Math.random() * 360));
   newStars();
+  
+  for (int i = 0; i < asteroids.length; i++){
+    asteroids[i].randomizePosition();
+  }
 }
 
 //set speed to 0
@@ -96,5 +112,12 @@ public void brake() {
 
 //creates a new array of stars
 public void newStars() {
-    for (int i = 0; i < stars.length; i++){stars[i] = new Star(canvasSize);}
+  for (int i = 0; i < stars.length; i++){stars[i] = new Star(canvasSize);}
+}
+
+public void newAsteroids() {
+  for (int i = 0; i < asteroids.length; i++){
+    int asteroidSize = (int)(Math.random() * (MAX_ASTEROID_SIZE - MIN_ASTEROID_SIZE + 1) + MIN_ASTEROID_SIZE);
+    asteroids[i] = new Asteroids(asteroidSize);
+  }
 }

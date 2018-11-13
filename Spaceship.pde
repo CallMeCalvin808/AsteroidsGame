@@ -36,7 +36,7 @@ class Spaceship extends Floater
       myColor = #0000FF;
       
       //initializes player at start of the game
-      myCenterX = myCenterY = 250;
+      myCenterX = myCenterY = 350;
       myDirectionX = myDirectionY = 0;
       myPointDirection = 360;
       
