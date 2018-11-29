@@ -70,4 +70,5 @@ class Asteroids extends Floater {
   public void setPointDirection(int n) {myPointDirection = n;}
   public double getPointDirection() {return myPointDirection;}
   
+  public int getSize() {return mySizeFactor;}
 }

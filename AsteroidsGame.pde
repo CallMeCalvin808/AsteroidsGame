@@ -3,10 +3,13 @@ Spaceship player;
 double ACCELERATE_CONSTANT = 0.1;
 int TURN_CONSTANT = 5;
 
-Asteroids[] asteroids;
-int NUM_ASTEROIDS = 11;
+ArrayList <Asteroids> asteroidList = new ArrayList<Asteroids>();
+int INITIAL_NUM_ASTEROIDS = 11;
 int MIN_ASTEROID_SIZE = 3;
 int MAX_ASTEROID_SIZE = 10;
+
+int numAsteroids = INITIAL_NUM_ASTEROIDS;
+int additionalAsteroids = 1;
 
 //constants and declaration relating to star class
 Star[] stars;
@@ -28,7 +31,6 @@ public void setup() {
   //initializes all classes
   player = new Spaceship();
   stars = new Star[NUM_STARS];
-  asteroids = new Asteroids[NUM_ASTEROIDS];
   
   newStars();
   newAsteroids();
@@ -47,13 +49,15 @@ public void draw() {
   //shows last half of stars in the forground
   for (int i = stars.length / 2; i < stars.length; i++){stars[i].show();}
   
-  for (int i = 0; i < asteroids.length; i++){
-    asteroids[i].show();
-    asteroids[i].move();
+  for (int i = 0; i < asteroidList.size(); i++){
+    asteroidList.get(i).show();
+    asteroidList.get(i).move();
   }
   
   //moves player
   controller();
+  //removes asteroids if close
+  checkAsteroidContact();
 }
 
 //Handles button presses
@@ -92,6 +96,9 @@ public void controller() {
 
 //stops player movement, changes stars, and changes player's position
 public void hyperspace() {
+  clearAsteroids();
+  newAsteroids();
+  
   player.setX((int)(Math.random() * canvasSize));
   player.setY((int)(Math.random() * canvasSize));
   player.setDirectionX(0);
@@ -99,8 +106,8 @@ public void hyperspace() {
   player.setPointDirection((int)(Math.random() * 360));
   newStars();
   
-  for (int i = 0; i < asteroids.length; i++){
-    asteroids[i].randomizePosition();
+  for (int i = 0; i < asteroidList.size(); i++){
+    asteroidList.get(i).randomizePosition();
   }
 }
 
@@ -110,14 +117,36 @@ public void brake() {
   player.setDirectionY(0);
 }
 
+//function that erases asteroids
+public void checkAsteroidContact() {
+  for (int i = 0; i < asteroidList.size(); i++){
+    float space =  dist(player.getX(), player.getY(), asteroidList.get(i).getX(), asteroidList.get(i).getY());
+    int sizeI = asteroidList.get(i).getSize() * 10;
+    
+    if (space <= sizeI)
+      asteroidList.remove(i);
+  }
+}
+
 //creates a new array of stars
 public void newStars() {
   for (int i = 0; i < stars.length; i++){stars[i] = new Star(canvasSize);}
 }
 
 public void newAsteroids() {
-  for (int i = 0; i < asteroids.length; i++){
+  for (int i = 0; i < numAsteroids; i++){
     int asteroidSize = (int)(Math.random() * (MAX_ASTEROID_SIZE - MIN_ASTEROID_SIZE + 1) + MIN_ASTEROID_SIZE);
-    asteroids[i] = new Asteroids(asteroidSize);
+    asteroidList.add(new Asteroids(asteroidSize));
+  }
+  
+  numAsteroids += additionalAsteroids;
+}
+
+public void clearAsteroids() {
+  for (int i = 0; i < asteroidList.size(); i++){
+    if (asteroidList.get(0) != null){
+      asteroidList.remove(0);
+      i--;
+    }
   }
 }
