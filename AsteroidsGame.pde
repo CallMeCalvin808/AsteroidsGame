@@ -58,6 +58,8 @@ public void draw() {
   controller();
   //removes asteroids if close
   checkAsteroidContact();
+  //healthbar
+  player.healthbar();
 }
 
 //Handles button presses
@@ -123,8 +125,10 @@ public void checkAsteroidContact() {
     float space =  dist(player.getX(), player.getY(), asteroidList.get(i).getX(), asteroidList.get(i).getY());
     int sizeI = asteroidList.get(i).getSize() * 10;
     
-    if (space <= sizeI)
+    if (space <= sizeI){
       asteroidList.remove(i);
+      player.setHealth(player.getHealth() - 1);
+    }
   }
 }
 
@@ -136,7 +140,7 @@ public void newStars() {
 public void newAsteroids() {
   for (int i = 0; i < numAsteroids; i++){
     int asteroidSize = (int)(Math.random() * (MAX_ASTEROID_SIZE - MIN_ASTEROID_SIZE + 1) + MIN_ASTEROID_SIZE);
-    asteroidList.add(new Asteroids(asteroidSize));
+    asteroidList.add(new Asteroids(asteroidSize, player.getX(), player.getY()));
   }
   
   numAsteroids += additionalAsteroids;

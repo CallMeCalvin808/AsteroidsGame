@@ -2,7 +2,7 @@ class Asteroids extends Floater {
   private int mySizeFactor;
   private int myRotationSpeed;
   
-  public Asteroids(int scale) {
+  public Asteroids(int scale, float playerPosX, float playerPosY) {
     //sets corners of astroids
     corners = 8;
     xCorners = new int[corners];
@@ -33,18 +33,25 @@ class Asteroids extends Floater {
     myColor = 155;
     //initializes position
     if(Math.random() < 0.5)
-      myCenterX = (int)(Math.random() * 301);
+      myCenterX = playerPosX - ((int)(Math.random() * 301) + 50);
     else
-      myCenterX = (int)(Math.random() * 301) + 400;
+      myCenterX = (int)(Math.random() * 301 + 100) + playerPosX;
     if(Math.random() < 0.5)
-      myCenterY = (int)(Math.random() * 301);
+      myCenterY = playerPosY - ((int)(Math.random() * 301) + 50);
     else
-      myCenterY = (int)(Math.random() * 301) + 400;
+      myCenterY = (int)(Math.random() * 301 + 100) + playerPosY;
       
     //initializes speed
     myDirectionX = ((Math.random() * 5) - 2) / mySizeFactor;
     myDirectionY = ((Math.random() * 5) - 2) / mySizeFactor;
-    myRotationSpeed = 10 / mySizeFactor;
+    myRotationSpeed = (10 / mySizeFactor) * ((int)(Math.random() * 5) - 2);
+    
+    if (myRotationSpeed == 0){
+      if (Math.random() < 0.5)
+        myRotationSpeed = -3;
+      else
+        myRotationSpeed = 3;
+    }
   }
   
   public void move() {

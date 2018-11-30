@@ -2,6 +2,7 @@ class Spaceship extends Floater
 {   
   //tracks whether or not player is accelerating
   private boolean isAccelerating;
+  private int health;
   
     //constructor for player class
     public Spaceship() {
@@ -41,6 +42,7 @@ class Spaceship extends Floater
       myPointDirection = 360;
       
       isAccelerating = false;
+      health = 5;
     }
     
     public void setIsAccelerating (boolean bool) {isAccelerating = bool;}
@@ -93,6 +95,21 @@ class Spaceship extends Floater
       }
     }
     
+    public void healthbar() {
+      if (health > 0){
+        double healthbarPosX = getX() - 25;
+        double healthbarPosY = getY() - 30;
+        
+        for (int i = 0; i < health; i++){
+          fill(0, 255, 0);
+          stroke(255);
+          strokeWeight(1);
+          
+          rect((float)healthbarPosX + 10 * i, (float)healthbarPosY, 10, 10);
+        }
+      }
+    }
+    
     public void setX(int x){myCenterX = x;}
     public int getX() {return (int)myCenterX;}
     public void setY(int y){myCenterY = y;}
@@ -104,4 +121,7 @@ class Spaceship extends Floater
     public double getDirectionY(){return myDirectionY;}
     public void setPointDirection(int degrees){myPointDirection = degrees;}
     public double getPointDirection(){return myPointDirection;}
+    
+    public void setHealth(int h){health = h;}
+    public int getHealth(){return health;}
 }
