@@ -110,6 +110,13 @@ class Spaceship extends Floater
       }
     }
     
+    public void shield(int strength) {
+      noFill();
+      strokeWeight(2);
+      stroke(strength, strength, 255);
+      ellipse(getX(), getY(), 50, 50);
+    }
+    
     public void setX(int x){myCenterX = x;}
     public int getX() {return (int)myCenterX;}
     public void setY(int y){myCenterY = y;}
